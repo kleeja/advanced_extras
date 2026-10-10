@@ -134,7 +134,7 @@ $kleeja_plugin['advanced_extras']['uninstall'] = function ($plg_id) {
 $kleeja_plugin['advanced_extras']['functions'] = [
     // the page of the extras in the control panel shows a box for every page instead of one for all of them
     'end_admin_page' => function ($args) {
-        if ($args['go_to'] != 'n_extra') {
+        if ($args['go_to'] !== 'n_extra') {
             return;
         }
 
@@ -143,7 +143,7 @@ $kleeja_plugin['advanced_extras']['functions'] = [
         //the words of the plugin, in English for a language that has no translation of them
         $olang = (array) ($args['olang'] ?? []) + advanced_extras_translations()['en'];
 
-        $current = $args['current_smt'] == 'fe' ? 'footer' : 'header';
+        $current = $args['current_smt'] === 'fe' ? 'footer' : 'header';
         $values = advanced_extras_get_values($args['ex_' . $current] ?? '');
 
         $extra_pages = [];
@@ -275,9 +275,9 @@ if (!function_exists('advanced_extras_get_values')) {
         $prefix = 'ADVANCED_EXTRAS_HELP_' . $name;
         $section = ['type' => $type, 'title' => $words[$prefix . '_TITLE'] ?? '', 'items' => []];
 
-        for ($n = 1; isset($words[$prefix . ($type == 'faq' ? '_Q_' : '_') . $n]); $n++) {
+        for ($n = 1; isset($words[$prefix . ($type === 'faq' ? '_Q_' : '_') . $n]); $n++) {
             $section['items'][] =
-                $type == 'faq'
+                $type === 'faq'
                     ? ['q' => $words[$prefix . '_Q_' . $n], 'a' => $words[$prefix . '_A_' . $n] ?? '']
                     : $words[$prefix . '_' . $n];
         }
@@ -376,7 +376,7 @@ if (!function_exists('advanced_extras_get_values')) {
 
         $parts = [$values['all'] ?? ''];
 
-        if ($page != 'all' && isset($values[$page])) {
+        if ($page !== 'all' && isset($values[$page])) {
             $parts[] = $values[$page];
         }
 
